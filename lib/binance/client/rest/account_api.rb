@@ -180,6 +180,7 @@ module Binance
         #
         # Returns a Hash with the request response
         def account_trade_list(options)
+          sleep 0.25 # rate limit weight of 5, 20 requests/second limit
           request :account, :get, 'myTrades', options
         end
       end

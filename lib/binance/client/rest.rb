@@ -63,6 +63,11 @@ module Binance
           req.params.merge! options
         end
 
+        # Binance does not provide insight into current rate limit usage
+        # 20 requests/second rate limit for REQUESTS endpoints, variable by their weight
+        sleep 60 if response.status == 429 # violating rate limit
+        raise 'IP rate limit banned' if response.status == 418
+
         response.body
       end
 
